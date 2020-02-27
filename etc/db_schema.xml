@@ -1,0 +1,16 @@
+<?xml version="1.0"?>
+<schema xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:framework:Setup/Declaration/Schema/etc/schema.xsd">
+    <table name="rnazy_custom_catalog" resource="default" engine="innodb" comment="Custom Catalog Table">
+        <column xsi:type="int" name="entity_id" padding="10" unsigned="true" nullable="false" identity="true"
+                comment="Product ID"/>
+        <column xsi:type="text" name="copywrite_info" nullable="false" comment="CopyWrite Info"/>
+        <column xsi:type="varchar" name="vpn" nullable="false" length="64" comment="Vendor Product Number"/>
+        <column xsi:type="varchar" name="sku" nullable="false" length="64" comment="SKU"/>
+        <constraint xsi:type="unique" referenceId="RNAZY_CUSTOM_CATALOG_ENTITY_ID">
+            <column name="entity_id"/>
+        </constraint>
+        <constraint xsi:type="primary" referenceId="PRIMARY">
+            <column name="entity_id"/>
+        </constraint>
+    </table>
+</schema>

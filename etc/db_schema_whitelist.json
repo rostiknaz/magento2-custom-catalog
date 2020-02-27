@@ -1,0 +1,14 @@
+{
+    "rnazy_custom_catalog": {
+        "column": {
+            "entity_id": true,
+            "copywrite_info": true,
+            "vpn": true,
+            "sku": true
+        },
+        "constraint": {
+            "RNAZY_CUSTOM_CATALOG_ENTITY_ID": true,
+            "PRIMARY": true
+        }
+    }
+}
