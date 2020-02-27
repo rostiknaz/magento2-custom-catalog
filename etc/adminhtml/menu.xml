@@ -1,0 +1,13 @@
+<?xml version="1.0"?>
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Backend:etc/menu.xsd">
+    <menu>
+        <add id="Rnazy_CustomCatalog::menu_item"
+             title="Custom Catalog"
+             translate="title"
+             module="Rnazy_CustomCatalog"
+             sortOrder="100"
+             parent="Magento_Catalog::inventory"
+             action="custom_catalog/product/"
+             resource="Rnazy_CustomCatalog::products" />
+    </menu>
+</config>

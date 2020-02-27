@@ -1,0 +1,16 @@
+<?xml version="1.0"?>
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:framework:ObjectManager/etc/config.xsd">
+    <type name="Magento\Framework\View\Element\UiComponent\DataProvider\CollectionFactory">
+        <arguments>
+            <argument name="collections" xsi:type="array">
+                <item name="custom_catalog_listing_data_source" xsi:type="string">Rnazy\CustomCatalog\Model\ResourceModel\Product\Grid\Collection</item>
+            </argument>
+        </arguments>
+    </type>
+    <virtualType name="Rnazy\CustomCatalog\Model\ResourceModel\Product\Grid\Collection" type="Magento\Framework\View\Element\UiComponent\DataProvider\SearchResult">
+        <arguments>
+            <argument name="mainTable" xsi:type="string">rnazy_custom_catalog</argument>
+            <argument name="resourceModel" xsi:type="string">Rnazy\CustomCatalog\Model\ResourceModel\Product</argument>
+        </arguments>
+    </virtualType>
+</config>
