@@ -2,12 +2,33 @@
 
 namespace Rnazy\CustomCatalog\Model;
 
+use Magento\Framework\DataObject\IdentityInterface;
 use Magento\Framework\Model\AbstractExtensibleModel;
-use Magento\Tests\NamingConvention\true\string;
 use Rnazy\CustomCatalog\Api\Data\ProductInterface;
+use Rnazy\CustomCatalog\Model\ResourceModel\Product as ProductResourceModel;
 
-class Product extends AbstractExtensibleModel implements ProductInterface
+class Product extends AbstractExtensibleModel implements ProductInterface, IdentityInterface
 {
+    /**
+     * Product cache tag
+     */
+    const CACHE_TAG = 'rnazy_p';
+
+    /**
+     * @var string
+     */
+    protected $_cacheTag = self::CACHE_TAG;
+
+    /**
+     * @var string
+     */
+    protected $_eventPrefix = 'rnazy_custom_product';
+
+    /**
+     * @var string
+     */
+    protected $_eventObject = 'custom_product';
+
     /**
      * Name of object id field
      *
@@ -22,7 +43,15 @@ class Product extends AbstractExtensibleModel implements ProductInterface
      */
     protected function _construct()
     {
-        $this->_init(\Rnazy\CustomCatalog\Model\ResourceModel\Product::class);
+        $this->_init(ProductResourceModel::class);
+    }
+
+    /**
+     * @return array
+     */
+    public function getIdentities()
+    {
+        return [self::CACHE_TAG . '_' . $this->getId()];
     }
 
     /**

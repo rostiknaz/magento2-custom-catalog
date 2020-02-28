@@ -21,7 +21,7 @@ interface ProductInterface extends CustomAttributesDataInterface
      *
      * @return $this
      */
-    public function setId($id): self;
+    public function setId($id);
 
     /**
      * @return string

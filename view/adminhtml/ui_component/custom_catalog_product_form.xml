@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<form xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Ui:etc/ui_configuration.xsd">
+    <argument name="data" xsi:type="array">
+        <item name="js_config" xsi:type="array">
+            <item name="provider" xsi:type="string">custom_catalog_product_form.product_form_data_source</item>
+            <item name="namespace" xsi:type="string">rnazy_product_form</item>
+        </item>
+        <item name="template" xsi:type="string">templates/form/collapsible</item>
+    </argument>
+    <settings>
+        <buttons>
+            <button name="save" class="Rnazy\CustomCatalog\Block\Adminhtml\Product\Edit\Button\Save"/>
+            <button name="delete" class="Rnazy\CustomCatalog\Block\Adminhtml\Product\Edit\Button\Delete"/>
+            <button name="back" class="Rnazy\CustomCatalog\Block\Adminhtml\Product\Edit\Button\Back"/>
+        </buttons>
+        <deps>
+            <dep>custom_catalog_product_form.product_form_data_source</dep>
+        </deps>
+    </settings>
+    <dataSource name="product_form_data_source">
+        <argument name="data" xsi:type="array">
+            <item name="js_config" xsi:type="array">
+                <item name="component" xsi:type="string">Magento_Ui/js/form/provider</item>
+            </item>
+        </argument>
+        <settings>
+            <submitUrl path="custom_catalog/product/save"/>
+        </settings>
+        <dataProvider class="Rnazy\CustomCatalog\Ui\DataProvider\Product\Form\ProductDataProvider" name="product_form_data_source">
+            <settings>
+                <requestFieldName>id</requestFieldName>
+                <primaryFieldName>entity_id</primaryFieldName>
+            </settings>
+        </dataProvider>
+    </dataSource>
+    <fieldset name="product_info">
+        <settings>
+            <label translate="true">Product Information</label>
+        </settings>
+        <input name="sku" sortOrder="10">
+            <settings>
+                <required>true</required>
+                <elementTmpl>ui/form/element/input</elementTmpl>
+                <label translate="true">SKU</label>
+            </settings>
+        </input>
+        <input name="vpn" sortOrder="20">
+            <settings>
+                <required>true</required>
+                <elementTmpl>ui/form/element/input</elementTmpl>
+                <label translate="true">VPN</label>
+            </settings>
+        </input>
+        <textarea name="copywrite_info" sortOrder="30">
+            <settings>
+                <cols>15</cols>
+                <rows>5</rows>
+                <label translate="true">CopyWrite Info</label>
+            </settings>
+        </textarea>
+    </fieldset>
+</form>

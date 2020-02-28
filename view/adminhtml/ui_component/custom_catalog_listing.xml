@@ -11,7 +11,7 @@
         </deps>
         <buttons>
             <button name="add">
-                <url path="*/*/new"/>
+                <url path="*/*/newAction"/>
                 <class>primary</class>
                 <label translate="true">Add New Product</label>
             </button>
@@ -20,15 +20,15 @@
     <dataSource name="custom_catalog_listing_data_source" component="Magento_Ui/js/grid/provider">
         <settings>
             <storageConfig>
-                <param name="indexField" xsi:type="string">product_id</param>
+                <param name="indexField" xsi:type="string">entity_id</param>
             </storageConfig>
             <updateUrl path="mui/index/render"/>
         </settings>
         <aclResource>Rnazy_CustomCatalog::products</aclResource>
-        <dataProvider class="Magento\Framework\View\Element\UiComponent\DataProvider\DataProvider" name="custom_catalog_listing_data_source">
+        <dataProvider class="CustomCatalogDataProvider" name="custom_catalog_listing_data_source">
             <settings>
                 <requestFieldName>id</requestFieldName>
-                <primaryFieldName>product_id</primaryFieldName>
+                <primaryFieldName>entity_id</primaryFieldName>
             </settings>
         </dataProvider>
     </dataSource>
@@ -51,12 +51,44 @@
         <paging name="listing_paging"/>
     </listingToolbar>
     <columns name="custom_catalog_columns">
-        <column name="product_id">
+        <column name="entity_id" sortOrder="10">
             <settings>
                 <filter>textRange</filter>
                 <label translate="true">ID</label>
                 <sorting>asc</sorting>
             </settings>
         </column>
+        <column name="sku" sortOrder="20">
+            <settings>
+                <filter>text</filter>
+                <bodyTmpl>ui/grid/cells/html</bodyTmpl>
+                <label translate="true">SKU</label>
+            </settings>
+        </column>
+        <column name="vpn" sortOrder="30">
+            <settings>
+                <filter>text</filter>
+                <bodyTmpl>ui/grid/cells/html</bodyTmpl>
+                <label translate="true">VPN</label>
+            </settings>
+        </column>
+        <column name="copywrite_info" sortOrder="40">
+            <settings>
+                <filter>text</filter>
+                <bodyTmpl>ui/grid/cells/html</bodyTmpl>
+                <label translate="true">CopyWrite Info</label>
+            </settings>
+        </column>
+        <actionsColumn name="actions" class="Rnazy\CustomCatalog\Ui\Component\Listing\Column\EditAction">
+            <argument name="data" xsi:type="array">
+                <item name="config" xsi:type="array">
+                    <item name="editUrlPath" xsi:type="string">custom_catalog/product/edit</item>
+                    <item name="urlEntityParamName" xsi:type="string">entity_id</item>
+                </item>
+            </argument>
+            <settings>
+                <indexField>entity_id</indexField>
+            </settings>
+        </actionsColumn>
     </columns>
 </listing>
