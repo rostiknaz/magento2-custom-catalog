@@ -7,7 +7,7 @@ class Back extends Generic
     /**
      * @return array
      */
-    public function getButtonData()
+    public function getButtonData(): array
     {
         return [
             'label' => __('Back'),

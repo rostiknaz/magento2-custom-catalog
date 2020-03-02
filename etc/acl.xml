@@ -8,6 +8,7 @@
                         <resource id="Rnazy_CustomCatalog::products" title="Custom Catalog" translate="title" sortOrder="30">
                             <resource id="Rnazy_CustomCatalog::edit_product" title="Edit Product" translate="title" sortOrder="10" />
                             <resource id="Rnazy_CustomCatalog::new_product" title="Add New Product" translate="title" sortOrder="20" />
+                            <resource id="Rnazy_CustomCatalog::delete_product" title="Add New Product" translate="title" sortOrder="30" />
                         </resource>
                     </resource>
                 </resource>

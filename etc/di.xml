@@ -1,12 +1,13 @@
 <?xml version="1.0"?>
 <config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:framework:ObjectManager/etc/config.xsd">
     <preference for="Rnazy\CustomCatalog\Api\Data\ProductInterface" type="Rnazy\CustomCatalog\Model\Product" />
-    <virtualType name="CustomCatalogDataProvider" type="Magento\Framework\View\Element\UiComponent\DataProvider\DataProvider">
+    <preference for="Rnazy\CustomCatalog\Api\ProductRepositoryInterface" type="Rnazy\CustomCatalog\Model\ProductRepository" />
+    <type name="Rnazy\CustomCatalog\Ui\Component\Listing\DataProvider">
         <arguments>
             <argument name="collection" xsi:type="object" shared="false">Rnazy\CustomCatalog\Model\ResourceModel\Product\Collection</argument>
             <argument name="filterPool" xsi:type="object" shared="false">CustomCatalogGridFilterPool</argument>
         </arguments>
-    </virtualType>
+    </type>
 
     <virtualType name="CustomCatalogGridFilterPool" type="Magento\Framework\View\Element\UiComponent\DataProvider\FilterPool">
         <arguments>
@@ -23,10 +24,11 @@
             </argument>
         </arguments>
     </type>
-    <virtualType name="Rnazy\CustomCatalog\Model\ResourceModel\Product\Grid\Collection" type="Magento\Framework\View\Element\UiComponent\DataProvider\SearchResult">
+    <type name="Rnazy\CustomCatalog\Model\ResourceModel\Product\Grid\Collection">
         <arguments>
-            <argument name="mainTable" xsi:type="string">rnazy_custom_catalog</argument>
+            <argument name="eventPrefix" xsi:type="string">rh_helloworld_helloworld_grid_collection</argument>
+            <argument name="eventObject" xsi:type="string">rh_helloworld_helloworld_grid_collection</argument>
             <argument name="resourceModel" xsi:type="string">Rnazy\CustomCatalog\Model\ResourceModel\Product</argument>
         </arguments>
-    </virtualType>
+    </type>
 </config>

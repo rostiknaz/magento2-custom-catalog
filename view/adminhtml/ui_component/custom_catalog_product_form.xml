@@ -16,6 +16,7 @@
         <deps>
             <dep>custom_catalog_product_form.product_form_data_source</dep>
         </deps>
+        <dataScope>data</dataScope>
     </settings>
     <dataSource name="product_form_data_source">
         <argument name="data" xsi:type="array">
@@ -26,36 +27,56 @@
         <settings>
             <submitUrl path="custom_catalog/product/save"/>
         </settings>
-        <dataProvider class="Rnazy\CustomCatalog\Ui\DataProvider\Product\Form\ProductDataProvider" name="product_form_data_source">
+        <dataProvider class="Rnazy\CustomCatalog\Ui\Component\Form\DataProvider" name="product_form_data_source">
             <settings>
-                <requestFieldName>id</requestFieldName>
+                <requestFieldName>entity_id</requestFieldName>
                 <primaryFieldName>entity_id</primaryFieldName>
             </settings>
         </dataProvider>
     </dataSource>
-    <fieldset name="product_info">
+    <fieldset name="product">
         <settings>
             <label translate="true">Product Information</label>
         </settings>
         <input name="sku" sortOrder="10">
+            <argument name="data" xsi:type="array">
+                <item name="config" xsi:type="array">
+                    <item name="validation" xsi:type="array">
+                        <item name="required-entry" xsi:type="boolean">true</item>
+                    </item>
+                    <item name="scopeLabel" xsi:type="string">[GLOBAL]</item>
+                </item>
+            </argument>
             <settings>
-                <required>true</required>
-                <elementTmpl>ui/form/element/input</elementTmpl>
                 <label translate="true">SKU</label>
+                <dataScope>sku</dataScope>
             </settings>
         </input>
         <input name="vpn" sortOrder="20">
+            <argument name="data" xsi:type="array">
+                <item name="config" xsi:type="array">
+                    <item name="validation" xsi:type="array">
+                        <item name="required-entry" xsi:type="boolean">true</item>
+                    </item>
+                    <item name="scopeLabel" xsi:type="string">[GLOBAL]</item>
+                </item>
+            </argument>
             <settings>
-                <required>true</required>
-                <elementTmpl>ui/form/element/input</elementTmpl>
                 <label translate="true">VPN</label>
+                <dataScope>vpn</dataScope>
             </settings>
         </input>
         <textarea name="copywrite_info" sortOrder="30">
+            <argument name="data" xsi:type="array">
+                <item name="config" xsi:type="array">
+                    <item name="scopeLabel" xsi:type="string">[STORE VIEW]</item>
+                </item>
+            </argument>
             <settings>
                 <cols>15</cols>
                 <rows>5</rows>
                 <label translate="true">CopyWrite Info</label>
+                <dataScope>copywrite_info</dataScope>
             </settings>
         </textarea>
     </fieldset>

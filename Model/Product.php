@@ -27,7 +27,7 @@ class Product extends AbstractExtensibleModel implements ProductInterface, Ident
     /**
      * @var string
      */
-    protected $_eventObject = 'custom_product';
+    protected $_eventObject = 'rnazy_product';
 
     /**
      * Name of object id field
@@ -106,5 +106,45 @@ class Product extends AbstractExtensibleModel implements ProductInterface, Ident
     public function setVpn(string $vpn): ProductInterface
     {
         return $this->setData(self::VPN, $vpn);
+    }
+
+    /**
+     * Set attribute set entity type id
+     *
+     * @param int $entityTypeId
+     *
+     * @return $this
+     */
+    public function setEntityTypeId($entityTypeId)
+    {
+        return $this->setData(self::KEY_ENTITY_TYPE_ID, $entityTypeId);
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function getEntityTypeId()
+    {
+        return $this->getData(self::KEY_ENTITY_TYPE_ID);
+    }
+
+    /**
+     * Set attribute set id
+     *
+     * @param int $attrSetId
+     *
+     * @return $this
+     */
+    public function setAttributeSetId($attrSetId): self
+    {
+        return $this->setData(self::KEY_ATTR_TYPE_ID, $attrSetId);
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function getAttributeSetId()
+    {
+        return $this->getData(self::KEY_ATTR_TYPE_ID);
     }
 }

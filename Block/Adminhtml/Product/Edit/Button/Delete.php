@@ -7,7 +7,7 @@ class Delete extends Generic
     /**
      * @return array
      */
-    public function getButtonData()
+    public function getButtonData(): array
     {
         return [
             'label' => __('Delete'),
@@ -20,12 +20,10 @@ class Delete extends Generic
     /**
      * @return string
      */
-    public function getDeleteUrl()
+    public function getDeleteUrl(): string
     {
-        $url = $this->url->getCurrentUrl();
-        $parts = explode('/', parse_url($url, PHP_URL_PATH));
-        $id = $parts[6];
+        $id = $this->request->getParam('entity_id');
 
-        return $this->getUrl('*/*/delete', ['id' => $id]);
+        return $this->getUrl('*/*/delete', ['entity_id' => $id]);
     }
 }

@@ -18,5 +18,4 @@ class Edit extends Action
     {
         return 'Edit Product';
     }
-
 }
