@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:framework-message-queue:etc/consumer.xsd">
+    <consumer name="rnazy_product_entity_update"
+              queue="rnazy_product_update_queue"
+              handler="Rnazy\CustomCatalog\Model\ResourceModel\UpdateProductConsumer::processMessage"
+              connection="amqp" />
+</config>

@@ -1,0 +1,225 @@
+<?xml version="1.0"?>
+<schema xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:framework:Setup/Declaration/Schema/etc/schema.xsd">
+    <table name="rnazy_product_entity" resource="default" engine="innodb" comment="Rnazy Product Entity">
+        <column xsi:type="int" name="entity_id" padding="10" unsigned="true" nullable="false" identity="true"
+                comment="Product ID"/>
+        <column xsi:type="smallint" name="attribute_set_id" padding="5" unsigned="true" nullable="false"
+                identity="false" default="0" comment="Attribute Set ID"/>
+        <column xsi:type="varchar" name="entity_type_id" nullable="false" length="32" default="simple" comment="Type ID"/>
+        <column xsi:type="varchar" name="vpn" nullable="false" length="64" comment="Vendor Product Number"/>
+        <column xsi:type="varchar" name="sku" nullable="false" length="64" comment="SKU"/>
+        <column xsi:type="timestamp" name="created_at" on_update="false" nullable="false" default="CURRENT_TIMESTAMP"
+                comment="Creation Time"/>
+        <column xsi:type="timestamp" name="updated_at" on_update="true" nullable="false" default="CURRENT_TIMESTAMP"
+                comment="Update Time"/>
+        <index referenceId="RNAZY_PRODUCT_ENTITY_ATTRIBUTE_SET_ID" indexType="btree">
+            <column name="attribute_set_id"/>
+        </index>
+        <constraint xsi:type="unique" referenceId="RNAZY_PRODUCT_ENTITY_ENTITY_ID">
+            <column name="entity_id"/>
+        </constraint>
+        <constraint xsi:type="primary" referenceId="PRIMARY">
+            <column name="entity_id"/>
+        </constraint>
+    </table>
+    <table name="rnazy_product_eav_attribute" resource="default" engine="innodb" comment="Catalog EAV Attribute Table">
+        <column xsi:type="smallint" name="attribute_id" padding="5" unsigned="true" nullable="false" identity="false"
+                comment="Attribute ID"/>
+        <column xsi:type="smallint" name="is_global" padding="5" unsigned="true" nullable="false" identity="false"
+                default="1" comment="Is Global"/>
+        <column xsi:type="smallint" name="is_visible" padding="5" unsigned="true" nullable="false" identity="false"
+                default="1" comment="Is Visible"/>
+        <column xsi:type="smallint" name="is_searchable" padding="5" unsigned="true" nullable="false" identity="false"
+                default="0" comment="Is Searchable"/>
+        <column xsi:type="smallint" name="is_filterable" padding="5" unsigned="true" nullable="false" identity="false"
+                default="0" comment="Is Filterable"/>
+        <column xsi:type="varchar" name="apply_to" nullable="true" length="255" comment="Apply To"/>
+        <column xsi:type="int" name="position" padding="11" unsigned="false" nullable="false" identity="false"
+                default="0" comment="Position"/>
+        <column xsi:type="smallint" name="is_wysiwyg_enabled" padding="5" unsigned="true" nullable="false"
+                identity="false" default="0" comment="Is WYSIWYG Enabled"/>
+        <constraint xsi:type="primary" referenceId="PRIMARY">
+            <column name="attribute_id"/>
+        </constraint>
+        <constraint xsi:type="foreign" referenceId="RNAZY_PRD_EAV_ATTR_ATTR_ID_EAV_ATTR_ATTR_ID"
+                    table="rnazy_product_eav_attribute" column="attribute_id" referenceTable="eav_attribute"
+                    referenceColumn="attribute_id" onDelete="CASCADE"/>
+    </table>
+    <table name="rnazy_product_entity_int" resource="default" engine="innodb"
+           comment="Catalog Product Integer Attribute Backend Table">
+        <column xsi:type="int" name="value_id" padding="11" unsigned="false" nullable="false" identity="true"
+                comment="Value ID"/>
+        <column xsi:type="smallint" name="attribute_id" padding="5" unsigned="true" nullable="false" identity="false"
+                default="0" comment="Attribute ID"/>
+        <column xsi:type="smallint" name="store_id" padding="5" unsigned="true" nullable="false" identity="false"
+                default="0" comment="Store ID"/>
+        <column xsi:type="int" name="entity_id" padding="10" unsigned="true" nullable="false" identity="false"
+                default="0" comment="Entity ID"/>
+        <column xsi:type="int" name="value" padding="11" unsigned="false" nullable="true" identity="false"
+                comment="Value"/>
+        <constraint xsi:type="primary" referenceId="PRIMARY">
+            <column name="value_id"/>
+        </constraint>
+        <constraint xsi:type="foreign" referenceId="RNAZY_PRODUCT_ENTITY_INT_ATTRIBUTE_ID_EAV_ATTRIBUTE_ATTRIBUTE_ID"
+                    table="rnazy_product_entity_int" column="attribute_id" referenceTable="eav_attribute"
+                    referenceColumn="attribute_id" onDelete="CASCADE"/>
+        <constraint xsi:type="foreign" referenceId="RNAZY_PRD_ENTT_INT_ENTT_ID_RNAZY_PRD_ENTT_ENTT_ID"
+                    table="rnazy_product_entity_int" column="entity_id" referenceTable="rnazy_product_entity"
+                    referenceColumn="entity_id" onDelete="CASCADE"/>
+        <constraint xsi:type="foreign" referenceId="RNAZY_PRODUCT_ENTITY_INT_STORE_ID_STORE_STORE_ID"
+                    table="rnazy_product_entity_int" column="store_id" referenceTable="store"
+                    referenceColumn="store_id" onDelete="CASCADE"/>
+        <constraint xsi:type="unique" referenceId="RNAZY_PRODUCT_ENTITY_INT_ENTITY_ID_ATTRIBUTE_ID_STORE_ID">
+            <column name="entity_id"/>
+            <column name="attribute_id"/>
+            <column name="store_id"/>
+        </constraint>
+        <index referenceId="RNAZY_PRODUCT_ENTITY_INT_ATTRIBUTE_ID" indexType="btree">
+            <column name="attribute_id"/>
+        </index>
+        <index referenceId="RNAZY_PRODUCT_ENTITY_INT_STORE_ID" indexType="btree">
+            <column name="store_id"/>
+        </index>
+    </table>
+    <table name="rnazy_product_entity_datetime" resource="default" engine="innodb"
+           comment="Catalog Product Datetime Attribute Backend Table">
+        <column xsi:type="int" name="value_id" padding="11" unsigned="false" nullable="false" identity="true"
+                comment="Value ID"/>
+        <column xsi:type="smallint" name="attribute_id" padding="5" unsigned="true" nullable="false" identity="false"
+                default="0" comment="Attribute ID"/>
+        <column xsi:type="smallint" name="store_id" padding="5" unsigned="true" nullable="false" identity="false"
+                default="0" comment="Store ID"/>
+        <column xsi:type="int" name="entity_id" padding="10" unsigned="true" nullable="false" identity="false"
+                default="0" comment="Entity ID"/>
+        <column xsi:type="datetime" name="value" on_update="false" nullable="true" comment="Value"/>
+        <constraint xsi:type="primary" referenceId="PRIMARY">
+            <column name="value_id"/>
+        </constraint>
+        <constraint xsi:type="foreign" referenceId="RNAZY_PRD_ENTT_DTIME_ATTR_ID_EAV_ATTR_ATTR_ID"
+                    table="rnazy_product_entity_datetime" column="attribute_id" referenceTable="eav_attribute"
+                    referenceColumn="attribute_id" onDelete="CASCADE"/>
+        <constraint xsi:type="foreign" referenceId="RNAZY_PRD_ENTT_DTIME_ENTT_ID_RNAZY_PRD_ENTT_ENTT_ID"
+                    table="rnazy_product_entity_datetime" column="entity_id" referenceTable="rnazy_product_entity"
+                    referenceColumn="entity_id" onDelete="CASCADE"/>
+        <constraint xsi:type="foreign" referenceId="RNAZY_PRODUCT_ENTITY_DATETIME_STORE_ID_STORE_STORE_ID"
+                    table="rnazy_product_entity_datetime" column="store_id" referenceTable="store"
+                    referenceColumn="store_id" onDelete="CASCADE"/>
+        <constraint xsi:type="unique" referenceId="RNAZY_PRODUCT_ENTITY_DATETIME_ENTITY_ID_ATTRIBUTE_ID_STORE_ID">
+            <column name="entity_id"/>
+            <column name="attribute_id"/>
+            <column name="store_id"/>
+        </constraint>
+        <index referenceId="RNAZY_PRODUCT_ENTITY_DATETIME_ATTRIBUTE_ID" indexType="btree">
+            <column name="attribute_id"/>
+        </index>
+        <index referenceId="RNAZY_PRODUCT_ENTITY_DATETIME_STORE_ID" indexType="btree">
+            <column name="store_id"/>
+        </index>
+    </table>
+    <table name="rnazy_product_entity_decimal" resource="default" engine="innodb"
+           comment="Catalog Product Decimal Attribute Backend Table">
+        <column xsi:type="int" name="value_id" padding="11" unsigned="false" nullable="false" identity="true"
+                comment="Value ID"/>
+        <column xsi:type="smallint" name="attribute_id" padding="5" unsigned="true" nullable="false" identity="false"
+                default="0" comment="Attribute ID"/>
+        <column xsi:type="smallint" name="store_id" padding="5" unsigned="true" nullable="false" identity="false"
+                default="0" comment="Store ID"/>
+        <column xsi:type="int" name="entity_id" padding="10" unsigned="true" nullable="false" identity="false"
+                default="0" comment="Entity ID"/>
+        <column xsi:type="decimal" name="value" scale="6" precision="20" unsigned="false" nullable="true"
+                comment="Value"/>
+        <constraint xsi:type="primary" referenceId="PRIMARY">
+            <column name="value_id"/>
+        </constraint>
+        <constraint xsi:type="foreign" referenceId="RNAZY_PRD_ENTT_DEC_ATTR_ID_EAV_ATTR_ATTR_ID"
+                    table="rnazy_product_entity_decimal" column="attribute_id" referenceTable="eav_attribute"
+                    referenceColumn="attribute_id" onDelete="CASCADE"/>
+        <constraint xsi:type="foreign" referenceId="RNAZY_PRD_ENTT_DEC_ENTT_ID_RNAZY_PRD_ENTT_ENTT_ID"
+                    table="rnazy_product_entity_decimal" column="entity_id" referenceTable="rnazy_product_entity"
+                    referenceColumn="entity_id" onDelete="CASCADE"/>
+        <constraint xsi:type="foreign" referenceId="RNAZY_PRODUCT_ENTITY_DECIMAL_STORE_ID_STORE_STORE_ID"
+                    table="rnazy_product_entity_decimal" column="store_id" referenceTable="store"
+                    referenceColumn="store_id" onDelete="CASCADE"/>
+        <constraint xsi:type="unique" referenceId="RNAZY_PRODUCT_ENTITY_DECIMAL_ENTITY_ID_ATTRIBUTE_ID_STORE_ID">
+            <column name="entity_id"/>
+            <column name="attribute_id"/>
+            <column name="store_id"/>
+        </constraint>
+        <index referenceId="RNAZY_PRODUCT_ENTITY_DECIMAL_STORE_ID" indexType="btree">
+            <column name="store_id"/>
+        </index>
+        <index referenceId="RNAZY_PRODUCT_ENTITY_DECIMAL_ATTRIBUTE_ID" indexType="btree">
+            <column name="attribute_id"/>
+        </index>
+    </table>
+    <table name="rnazy_product_entity_varchar" resource="default" engine="innodb"
+           comment="Catalog Product Varchar Attribute Backend Table">
+        <column xsi:type="int" name="value_id" padding="11" unsigned="false" nullable="false" identity="true"
+                comment="Value ID"/>
+        <column xsi:type="smallint" name="attribute_id" padding="5" unsigned="true" nullable="false" identity="false"
+                default="0" comment="Attribute ID"/>
+        <column xsi:type="smallint" name="store_id" padding="5" unsigned="true" nullable="false" identity="false"
+                default="0" comment="Store ID"/>
+        <column xsi:type="int" name="entity_id" padding="10" unsigned="true" nullable="false" identity="false"
+                default="0" comment="Entity ID"/>
+        <column xsi:type="varchar" name="value" nullable="true" length="255" comment="Value"/>
+        <constraint xsi:type="primary" referenceId="PRIMARY">
+            <column name="value_id"/>
+        </constraint>
+        <constraint xsi:type="foreign" referenceId="RNAZY_PRD_ENTT_VCHR_ATTR_ID_EAV_ATTR_ATTR_ID"
+                    table="rnazy_product_entity_varchar" column="attribute_id" referenceTable="eav_attribute"
+                    referenceColumn="attribute_id" onDelete="CASCADE"/>
+        <constraint xsi:type="foreign" referenceId="RNAZY_PRD_ENTT_VCHR_ENTT_ID_RNAZY_PRD_ENTT_ENTT_ID"
+                    table="rnazy_product_entity_varchar" column="entity_id" referenceTable="rnazy_product_entity"
+                    referenceColumn="entity_id" onDelete="CASCADE"/>
+        <constraint xsi:type="foreign" referenceId="RNAZY_PRODUCT_ENTITY_VARCHAR_STORE_ID_STORE_STORE_ID"
+                    table="rnazy_product_entity_varchar" column="store_id" referenceTable="store"
+                    referenceColumn="store_id" onDelete="CASCADE"/>
+        <constraint xsi:type="unique" referenceId="RNAZY_PRODUCT_ENTITY_VARCHAR_ENTITY_ID_ATTRIBUTE_ID_STORE_ID">
+            <column name="entity_id"/>
+            <column name="attribute_id"/>
+            <column name="store_id"/>
+        </constraint>
+        <index referenceId="RNAZY_PRODUCT_ENTITY_VARCHAR_ATTRIBUTE_ID" indexType="btree">
+            <column name="attribute_id"/>
+        </index>
+        <index referenceId="RNAZY_PRODUCT_ENTITY_VARCHAR_STORE_ID" indexType="btree">
+            <column name="store_id"/>
+        </index>
+    </table>
+    <table name="rnazy_product_entity_text" resource="default" engine="innodb"
+           comment="Catalog Product Text Attribute Backend Table">
+        <column xsi:type="int" name="value_id" padding="11" unsigned="false" nullable="false" identity="true"
+                comment="Value ID"/>
+        <column xsi:type="smallint" name="attribute_id" padding="5" unsigned="true" nullable="false" identity="false"
+                default="0" comment="Attribute ID"/>
+        <column xsi:type="smallint" name="store_id" padding="5" unsigned="true" nullable="false" identity="false"
+                default="0" comment="Store ID"/>
+        <column xsi:type="int" name="entity_id" padding="10" unsigned="true" nullable="false" identity="false"
+                default="0" comment="Entity ID"/>
+        <column xsi:type="text" name="value" nullable="true" comment="Value"/>
+        <constraint xsi:type="primary" referenceId="PRIMARY">
+            <column name="value_id"/>
+        </constraint>
+        <constraint xsi:type="foreign" referenceId="RNAZY_PRD_ENTT_TEXT_ATTR_ID_EAV_ATTR_ATTR_ID"
+                    table="rnazy_product_entity_text" column="attribute_id" referenceTable="eav_attribute"
+                    referenceColumn="attribute_id" onDelete="CASCADE"/>
+        <constraint xsi:type="foreign" referenceId="RNAZY_PRD_ENTT_TEXT_ENTT_ID_RNAZY_PRD_ENTT_ENTT_ID"
+                    table="rnazy_product_entity_text" column="entity_id" referenceTable="rnazy_product_entity"
+                    referenceColumn="entity_id" onDelete="CASCADE"/>
+        <constraint xsi:type="foreign" referenceId="RNAZY_PRODUCT_ENTITY_TEXT_STORE_ID_STORE_STORE_ID"
+                    table="rnazy_product_entity_text" column="store_id" referenceTable="store"
+                    referenceColumn="store_id" onDelete="CASCADE"/>
+        <constraint xsi:type="unique" referenceId="RNAZY_PRODUCT_ENTITY_TEXT_ENTITY_ID_ATTRIBUTE_ID_STORE_ID">
+            <column name="entity_id"/>
+            <column name="attribute_id"/>
+            <column name="store_id"/>
+        </constraint>
+        <index referenceId="RNAZY_PRODUCT_ENTITY_TEXT_ATTRIBUTE_ID" indexType="btree">
+            <column name="attribute_id"/>
+        </index>
+        <index referenceId="RNAZY_PRODUCT_ENTITY_TEXT_STORE_ID" indexType="btree">
+            <column name="store_id"/>
+        </index>
+    </table>
+</schema>
