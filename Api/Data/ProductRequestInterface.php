@@ -2,8 +2,6 @@
 
 namespace Rnazy\CustomCatalog\Api\Data;
 
-use Magento\Framework\Api\CustomAttributesDataInterface;
-
 interface ProductRequestInterface
 {
     const STORE_ID = 'store_id';
@@ -24,12 +22,12 @@ interface ProductRequestInterface
     /**
      * @return \Rnazy\CustomCatalog\Api\Data\ProductInterface
      */
-    public function getProduct(): \Rnazy\CustomCatalog\Api\Data\ProductInterface;
+    public function getProduct(): ProductInterface;
 
     /**
      * @param \Rnazy\CustomCatalog\Api\Data\ProductInterface $product
      *
      * @return $this
      */
-    public function setProduct(\Rnazy\CustomCatalog\Api\Data\ProductInterface $product): self;
+    public function setProduct(ProductInterface $product): self;
 }

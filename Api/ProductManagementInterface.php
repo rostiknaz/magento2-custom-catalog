@@ -2,8 +2,6 @@
 
 namespace Rnazy\CustomCatalog\Api;
 
-use Rnazy\CustomCatalog\Api\Data\ProductInterface;
-
 interface ProductManagementInterface
 {
     /**
@@ -18,9 +16,11 @@ interface ProductManagementInterface
     public function asyncUpdate(int $entityId, string $copywriteInfo = '', string $vpn = '');
 
     /**
+     * Get list of all products by vpn.
+     *
      * @param string $vpn
      *
-     * @return mixed
+     * @return \Rnazy\CustomCatalog\Api\Data\ProductInterface[]
      */
     public function getByVpn(string $vpn);
 }

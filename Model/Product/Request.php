@@ -11,26 +11,6 @@ class Request implements ProductRequestInterface
     public $product;
 
     /**
-     * Object attributes
-     *
-     * @var array
-     */
-    protected $_data = [];
-
-    /**
-     * Constructor
-     *
-     * By default is looking for first argument as array and assigns it as object attributes
-     * This behavior may change in child classes
-     *
-     * @param array $data
-     */
-    public function __construct(array $data = [])
-    {
-        $this->_data = $data;
-    }
-
-    /**
      * {@inheritdoc}
      */
     public function getStoreId(): int
@@ -49,61 +29,22 @@ class Request implements ProductRequestInterface
     }
 
     /**
-     * @return \Rnazy\CustomCatalog\Api\Data\ProductInterface
+     * @return ProductInterface
      */
-    public function getProduct(): \Rnazy\CustomCatalog\Api\Data\ProductInterface
+    public function getProduct(): ProductInterface
     {
         return $this->product;
     }
 
     /**
-     * @param \Rnazy\CustomCatalog\Api\Data\ProductInterface $product
+     * @param ProductInterface $product
      *
      * @return ProductRequestInterface
      */
-    public function setProduct(\Rnazy\CustomCatalog\Api\Data\ProductInterface $product): ProductRequestInterface
+    public function setProduct(ProductInterface $product): ProductRequestInterface
     {
         $this->product = $product;
 
         return $this;
-    }
-
-    /**
-     * Get value from _data array without parse key
-     *
-     * @return  array
-     */
-    public function getData()
-    {
-        return $this->_data;
-    }
-
-    /**
-     * If $key is empty, checks whether there's any data in the object
-     *
-     * Otherwise checks if the specified attribute is set.
-     *
-     * @param string $key
-     * @return bool
-     */
-    public function hasData($key = '')
-    {
-        if (empty($key) || !is_string($key)) {
-            return !empty($this->_data);
-        }
-        return array_key_exists($key, $this->_data);
-    }
-
-    /**
-     * Checks whether the object is empty
-     *
-     * @return bool
-     */
-    public function isEmpty()
-    {
-        if (empty($this->_data)) {
-            return true;
-        }
-        return false;
     }
 }

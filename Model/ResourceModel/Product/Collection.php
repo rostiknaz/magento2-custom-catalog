@@ -84,7 +84,10 @@ class Collection extends AbstractCollection
      */
     protected function _construct()
     {
-        $this->_init(\Rnazy\CustomCatalog\Model\Product::class, \Rnazy\CustomCatalog\Model\ResourceModel\Product::class);
+        $this->_init(
+            \Rnazy\CustomCatalog\Model\Product::class,
+            \Rnazy\CustomCatalog\Model\ResourceModel\Product::class
+        );
     }
 
     /**

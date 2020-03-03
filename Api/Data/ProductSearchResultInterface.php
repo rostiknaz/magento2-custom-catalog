@@ -7,12 +7,12 @@ use Magento\Framework\Api\SearchResultsInterface;
 interface ProductSearchResultInterface extends SearchResultsInterface
 {
     /**
-     * @return ProductInterface[]
+     * @return \Rnazy\CustomCatalog\Api\Data\ProductInterface[]
      */
     public function getItems();
 
     /**
-     * @param ProductInterface[] $items
+     * @param \Rnazy\CustomCatalog\Api\Data\ProductInterface[] $items
      * @return void
      */
     public function setItems(array $items);
