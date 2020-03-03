@@ -6,11 +6,14 @@ use Magento\Framework\Api\SearchCriteriaInterface;
 use Magento\Framework\Exception\CouldNotDeleteException;
 use Magento\Framework\Exception\CouldNotSaveException;
 use Magento\Framework\Exception\NoSuchEntityException;
-use Magento\Framework\Exception\ValidatorException;
 use Magento\Framework\Model\AbstractModel;
 use Rnazy\CustomCatalog\Api\Data\ProductInterface;
+use Rnazy\CustomCatalog\Api\Data\ProductSearchResultInterface;
 use Rnazy\CustomCatalog\Api\ProductRepositoryInterface;
 use Rnazy\CustomCatalog\Model\ResourceModel\Product as ProductResourceModel;
+use Magento\Store\Model\StoreManagerInterface;
+use Magento\Framework\Api\SearchCriteria\CollectionProcessorInterface;
+use Rnazy\CustomCatalog\Model\Product\SearchResultFactory;
 
 class ProductRepository implements ProductRepositoryInterface
 {
@@ -23,14 +26,48 @@ class ProductRepository implements ProductRepositoryInterface
      * @var ProductFactory
      */
     protected $productFactory;
+    /**
+     * @var StoreManagerInterface
+     */
+    private $storeManager;
+    /**
+     * @var ProductResourceModel\CollectionFactory
+     */
+    private $collectionFactory;
+    /**
+     * @var CollectionProcessorInterface
+     */
+    private $collectionProcessor;
+    /**
+     * @var SearchResultFactory
+     */
+    private $searchResultFactory;
 
 
+    /**
+     * ProductRepository constructor.
+     *
+     * @param ProductResourceModel $productResource
+     * @param ProductFactory $productFactory
+     * @param StoreManagerInterface $storeManager
+     * @param ProductResourceModel\CollectionFactory $collectionFactory
+     * @param CollectionProcessorInterface $collectionProcessor
+     * @param SearchResultFactory $searchResultFactory
+     */
     public function __construct(
         ProductResourceModel $productResource,
-        ProductFactory $productFactory
+        ProductFactory $productFactory,
+        StoreManagerInterface $storeManager,
+        ProductResourceModel\CollectionFactory $collectionFactory,
+        CollectionProcessorInterface $collectionProcessor,
+        SearchResultFactory $searchResultFactory
     ) {
         $this->productResource = $productResource;
         $this->productFactory = $productFactory;
+        $this->storeManager = $storeManager;
+        $this->collectionFactory = $collectionFactory;
+        $this->collectionProcessor = $collectionProcessor;
+        $this->searchResultFactory = $searchResultFactory;
     }
 
     /**
@@ -53,7 +90,6 @@ class ProductRepository implements ProductRepositoryInterface
      */
     public function getById($entityId)
     {
-
         /** @var ProductInterface|AbstractModel $product */
         $product = $this->productFactory->create();
 
@@ -71,18 +107,22 @@ class ProductRepository implements ProductRepositoryInterface
     /**
      * @inheritdoc
      */
-//    public function getList(SearchCriteriaInterface $searchCriteria)
-//    {
-//        $collection = $this->collectionFactory->create();
-//        $this->collectionProcessor->process($searchCriteria, $collection);
-//
-//        $searchResult = $this->searchResultFactory->create();
-//        $searchResult->setSearchCriteria($searchCriteria);
-//        $searchResult->setItems($collection->getItems());
-//        return $searchResult;
-//    }
-//
-//
+    public function getList(SearchCriteriaInterface $searchCriteria)
+    {
+        /** @var ProductResourceModel\Collection $collection */
+        $collection = $this->collectionFactory->create();
+        $this->collectionProcessor->process($searchCriteria, $collection);
+
+        /** @var ProductSearchResultInterface $searchResult */
+        $searchResult = $this->searchResultFactory->create();
+        $searchResult->setSearchCriteria($searchCriteria);
+        $searchResult->setItems($collection->getItems());
+        $searchResult->setTotalCount($collection->getSize());
+
+        return $searchResult;
+    }
+
+
     /**
      * {@inheritdoc}
      */
